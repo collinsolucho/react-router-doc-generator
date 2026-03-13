@@ -1,8 +1,9 @@
 // routes/documents.jsx
 import { useLoaderData, useSearchParams } from "react-router";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { ReportCard } from "../components/ReportCard"; // Your PDF template
+import { ReportCard } from "../components/pdfGenerator"; // Your PDF template
 import { getResults } from "../model/database";
+import { generateWordReport } from "../functions/wordGenerator";
 
 export async function loader({ request }) {
   const url = new URL(request.url);
@@ -71,6 +72,14 @@ export default function Document() {
             >
               {({ loading }) => (loading ? "Preparing..." : "Download PDF")}
             </PDFDownloadLink>
+
+            {/* Word Button */}
+            <button
+              onClick={() => generateWordReport(doc)}
+              className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700"
+            >
+              Download Word (.docx)
+            </button>
           </div>
         ))}
       </div>
